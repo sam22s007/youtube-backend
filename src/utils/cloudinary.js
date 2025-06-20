@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { v2 as cloudinary} from "cloudinary";
 import fs from "fs";
     cloudinary.config({ 
@@ -13,10 +15,12 @@ import fs from "fs";
         {
             resource_type:"auto"
         }
-       )
-            console.log("File is uploaded on cloudinary",response.url)
+       ) 
+         if(fs.existsSync(localfilepath))
+            fs.unlinkSync(localfilepath)
             return response
         } catch (error) {
+            if(fs.existsSync(localfilepath))
             fs.unlinkSync(localfilepath)
             return null
         } 
